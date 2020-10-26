@@ -1,0 +1,72 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+
+android {
+    compileSdkVersion 30
+    buildToolsVersion "30.0.2"
+
+    defaultConfig {
+        applicationId "com.article.migrations"
+        minSdkVersion 23
+        targetSdkVersion 30
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        kapt {
+            arguments {
+                arg("room.schemaLocation", "$projectDir/schemas")
+                arg("room.incremental", "true")
+                arg("room.expandProjection", "true")
+            }
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+
+        debug {
+
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: "libs", include: ["*.jar"])
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    implementation "androidx.core:core-ktx:$rootProject.core_ktx"
+    implementation "androidx.appcompat:appcompat:$rootProject.appcompat_version"
+    implementation "androidx.constraintlayout:constraintlayout:$rootProject.constraintlayout_version"
+    implementation "com.google.android.material:material:$rootProject.google_material"
+
+    //arch
+    implementation "androidx.lifecycle:lifecycle-extensions:$rootProject.lifecycle_extensions"
+    implementation "androidx.navigation:navigation-fragment-ktx:$rootProject.navigation_fragment"
+    implementation "androidx.room:room-runtime:$rootProject.room_version"
+    kapt "androidx.room:room-compiler:$rootProject.room_version"
+    implementation "androidx.room:room-rxjava2:$rootProject.room_version"
+
+    //di
+    implementation "com.google.dagger:dagger:$rootProject.dagger_version"
+    implementation "com.google.dagger:dagger-android:$rootProject.dagger_version"
+    implementation "com.google.dagger:dagger-android-support:$rootProject.dagger_version"
+    kapt "com.google.dagger:dagger-android-processor:$rootProject.dagger_version"
+    kapt "com.google.dagger:dagger-compiler:$rootProject.dagger_version"
+
+    //rx
+    //rx
+    implementation "io.reactivex.rxjava2:rxjava:$rootProject.rxJava_version"
+    implementation "io.reactivex.rxjava2:rxkotlin:$rootProject.rxKotlin_version"
+    implementation "io.reactivex.rxjava2:rxandroid:$rootProject.rxAndroid_version"
+
+    testImplementation "junit:junit:$rootProject.junit_version"
+    androidTestImplementation "androidx.test.ext:junit:$rootProject.androidx_test_version_junit"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$rootProject.espresso_core_version"
+
+}
